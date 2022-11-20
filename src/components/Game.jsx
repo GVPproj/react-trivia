@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react"
+import Answer from "./Answer"
+import { nanoid } from "nanoid"
 
 export default function Game() {
   const [questions, setQuestions] = useState(null)
+  const [answers, setAnswers] = useState([])
 
   useEffect(() => {
     async function getQs() {
@@ -9,72 +12,97 @@ export default function Game() {
         "https://opentdb.com/api.php?amount=5&category=21&difficulty=easy&type=multiple"
       )
       const data = await res.json()
-      setQuestions(
+      setQuestions(data.results.map((result) => result.question))
+      setAnswers(
         data.results.map((result) => {
-          let wrongAnswers = [...result.incorrect_answers]
-          let rightAnswer = result.correct_answer
           let answersArray = [
-            { answer: wrongAnswers[0], isCorrect: false },
-            { answer: wrongAnswers[1], isCorrect: false },
-            { answer: wrongAnswers[2], isCorrect: false },
-            { answer: rightAnswer, isCorrect: true },
+            {
+              answer: result.incorrect_answers[0],
+              isCorrect: false,
+              isSelected: false,
+              id: nanoid(),
+            },
+            {
+              answer: result.incorrect_answers[1],
+              isCorrect: false,
+              isSelected: false,
+              id: nanoid(),
+            },
+            {
+              answer: result.incorrect_answers[2],
+              isCorrect: false,
+              isSelected: false,
+              id: nanoid(),
+            },
+            {
+              answer: result.correct_answer,
+              isCorrect: true,
+              isSelected: false,
+              id: nanoid(),
+            },
           ]
-          let shuffledAnswersArray = answersArray.sort(() => (Math.random() > .5) ? 1 : -1);
-
-          return {
-            question: result.question,
-            answers: shuffledAnswersArray,
-          }
+          let shuffledAnswersArray = answersArray.sort(() =>
+            Math.random() > 0.5 ? 1 : -1
+          )
+          return shuffledAnswersArray
         })
       )
     }
     getQs()
   }, [])
 
-  // function chooseAnswer(ans){
-  //   console.log(answers[ans].isCorrect)
-  // }
-  
+  function selectAnswer(id) {
+    console.log(id)
+    // setAnswers((oldAnswers) => oldAnswers.map((answer) => {
+    //   // console.log(answer)
+    //   // return answer.id === id ? { ...answer, isSelected: !answer.isSelected } : answer
+    // }))
+  }
 
   function Question(props) {
     return (
       <div className="question">
-        <h2>{props.q}</h2>
+        <h2>{props.question}</h2>
         <ul className="answer-options">
-          <li onClick={()=> console.log(props.answers[0].isCorrect)}>{props.answers[0].answer}</li>
-          <li onClick={()=> console.log(props.answers[1].isCorrect)}>{props.answers[1].answer}</li>
-          <li onClick={()=> console.log(props.answers[2].isCorrect)}>{props.answers[2].answer}</li>
-          <li onClick={()=> console.log(props.answers[3].isCorrect)}>{props.answers[3].answer}</li>
+          <Answer
+            selectAnswer={() => selectAnswer(props.answers[0].id)}
+            answer={props.answers[0]}
+          />
+          <Answer
+            selectAnswer={() => selectAnswer(props.answers[1].id)}
+            answer={props.answers[1]}
+          />
+          <Answer
+            selectAnswer={() => selectAnswer(props.answers[2].id)}
+            answer={props.answers[2]}
+          />
+          <Answer
+            selectAnswer={() => selectAnswer(props.answers[3].id)}
+            answer={props.answers[3]}
+          />
         </ul>
         <hr />
       </div>
     )
   }
+
   function Check() {
     return (
       <div className="check-answers">
-        <button>Check Answers</button>
+        <button onClick={() => console.log("clicked check btn")}>
+          Check Answers
+        </button>
       </div>
     )
   }
 
   return (
     <div className="game-page">
-      {questions && (
-        <Question q={questions[0].question} answers={questions[0].answers} />
-      )}
-      {questions && (
-        <Question q={questions[1].question} answers={questions[1].answers} />
-      )}
-      {questions && (
-        <Question q={questions[2].question} answers={questions[2].answers} />
-      )}
-      {questions && (
-        <Question q={questions[3].question} answers={questions[3].answers} />
-      )}
-      {questions && (
-        <Question q={questions[4].question} answers={questions[4].answers} />
-      )}
+      {questions && <Question question={questions[0]} answers={answers[0]} />}
+      {questions && <Question question={questions[1]} answers={answers[1]} />}
+      {questions && <Question question={questions[2]} answers={answers[2]} />}
+      {questions && <Question question={questions[3]} answers={answers[3]} />}
+      {questions && <Question question={questions[4]} answers={answers[4]} />}
       <Check />
     </div>
   )

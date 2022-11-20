@@ -3,6 +3,11 @@
   margin: 0;
 }
 
+main{
+  margin: 0 auto;
+  max-width: 800px;
+}
+
 /* Navigation */
 
 nav{
@@ -11,5 +16,12 @@ nav{
 }
 
 ul{
+  list-style-type: none;
   padding: 0;
+}
+
+/* Questions */
+
+.answer{
+  font-size: 2em;
 }

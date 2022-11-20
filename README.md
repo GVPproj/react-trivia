@@ -13,11 +13,12 @@ https://opentdb.com/api_config.php
 ## Todos
 
 Soon:
-1. Set isCorrect on correct answer
-2. Shuffle answers so correct answer isn't always option 4
-    - https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
-3. Set isSelected on selected answers (indicate in the UI)
-4. Check button compares isSelected to isCorrect (indicate in the UI)
+
+Create a question li component that takes props such as isChosen, id (nanoid?)
+
+
+1. Set isSelected on selected answers (indicate in the UI)
+2. Check button compares isSelected to isCorrect (indicate in the UI)
 
 Later:
 - styles
