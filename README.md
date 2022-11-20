@@ -13,10 +13,11 @@ https://opentdb.com/api_config.php
 ## Todos
 
 Soon:
-1. Shuffle answers so correct answer isn't always option 4
+1. Set isCorrect on correct answer
+2. Shuffle answers so correct answer isn't always option 4
     - https://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array
-2. Set isSelected on selected answers (indicate in the UI)
-3. Check button compares isSelected to isCorrect (indicate in the UI)
+3. Set isSelected on selected answers (indicate in the UI)
+4. Check button compares isSelected to isCorrect (indicate in the UI)
 
 Later:
 - styles

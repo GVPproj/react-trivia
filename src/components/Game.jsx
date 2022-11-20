@@ -11,9 +11,19 @@ export default function Game() {
       const data = await res.json()
       setQuestions(
         data.results.map((result) => {
+          let wrongAnswers = [...result.incorrect_answers]
+          let rightAnswer = result.correct_answer
+          let answersArray = [
+            { answer: wrongAnswers[0], isCorrect: false },
+            { answer: wrongAnswers[1], isCorrect: false },
+            { answer: wrongAnswers[2], isCorrect: false },
+            { answer: rightAnswer, isCorrect: true },
+          ]
+          let shuffledAnswersArray = answersArray.sort(() => (Math.random() > .5) ? 1 : -1);
+
           return {
             question: result.question,
-            answers: [...result.incorrect_answers, result.correct_answer],
+            answers: shuffledAnswersArray,
           }
         })
       )
@@ -21,17 +31,20 @@ export default function Game() {
     getQs()
   }, [])
 
-  console.log(questions)
+  // function chooseAnswer(ans){
+  //   console.log(answers[ans].isCorrect)
+  // }
+  
 
   function Question(props) {
     return (
       <div className="question">
         <h2>{props.q}</h2>
         <ul className="answer-options">
-          <li>{props.answers[0]}</li>
-          <li>{props.answers[1]}</li>
-          <li>{props.answers[2]}</li>
-          <li>{props.answers[3]}</li>        
+          <li onClick={()=> console.log(props.answers[0].isCorrect)}>{props.answers[0].answer}</li>
+          <li onClick={()=> console.log(props.answers[1].isCorrect)}>{props.answers[1].answer}</li>
+          <li onClick={()=> console.log(props.answers[2].isCorrect)}>{props.answers[2].answer}</li>
+          <li onClick={()=> console.log(props.answers[3].isCorrect)}>{props.answers[3].answer}</li>
         </ul>
         <hr />
       </div>
@@ -47,11 +60,21 @@ export default function Game() {
 
   return (
     <div className="game-page">
-      {questions && <Question q={questions[0].question} answers={questions[0].answers}/>}
-      {questions && <Question q={questions[1].question} answers={questions[1].answers}/>}
-      {questions && <Question q={questions[2].question} answers={questions[2].answers}/>}
-      {questions && <Question q={questions[3].question} answers={questions[3].answers}/>}
-      {questions && <Question q={questions[4].question} answers={questions[4].answers}/>}
+      {questions && (
+        <Question q={questions[0].question} answers={questions[0].answers} />
+      )}
+      {questions && (
+        <Question q={questions[1].question} answers={questions[1].answers} />
+      )}
+      {questions && (
+        <Question q={questions[2].question} answers={questions[2].answers} />
+      )}
+      {questions && (
+        <Question q={questions[3].question} answers={questions[3].answers} />
+      )}
+      {questions && (
+        <Question q={questions[4].question} answers={questions[4].answers} />
+      )}
       <Check />
     </div>
   )
