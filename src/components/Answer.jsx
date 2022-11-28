@@ -1,9 +1,9 @@
-import { redirect } from "react-router-dom"
+// import { redirect } from "react-router-dom"
 
 export default function Answer(props){
 
     const styles ={
-        backgroundColor: props.answer.isSelected ? "red" : "blue"
+        backgroundColor: props.answer.isSelected ? "red" : "pink"
     }
 
     return(

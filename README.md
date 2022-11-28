@@ -1,7 +1,7 @@
 # React Trivia App
 
-https://www.figma.com/file/4QCwe8KYXJkYUGuqR6mkap/Quizzical-App-(Copy)?node-id=0%3A1&t=uDETNVSZzg1ltJYK-0
-https://opentdb.com/api_config.php
+<https://www.figma.com/file/4QCwe8KYXJkYUGuqR6mkap/Quizzical-App-(Copy)?node-id=0%3A1&t=uDETNVSZzg1ltJYK-0>
+<https://opentdb.com/api_config.php>
 
 ## Requirements
 
@@ -14,12 +14,12 @@ https://opentdb.com/api_config.php
 
 Soon:
 
-Create a question li component that takes props such as isChosen, id (nanoid?)
-
-
-1. Set isSelected on selected answers (indicate in the UI)
-2. Check button compares isSelected to isCorrect (indicate in the UI)
+- refactor React question elements
+- store chosen answers
+- store correct answers
+- Check button compares isSelected to isCorrect (indicate in the UI)
 
 Later:
+
 - styles
 - why are html codes rendering instead of corresponding symbols
