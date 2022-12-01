@@ -4,7 +4,9 @@ import { nanoid } from "nanoid"
 
 export default function Game() {
   const [questionData, setQuestionData] = useState(null)
-  const [chosenAnswers, setChosenAnswers] = useState([])
+  const [allAnswered, setAllAnswered] = useState(false)
+  const [chosenAnswers, setChosenAnswers] = useState(null)
+  let resultText = ''
 
   // Fetch the Question Data
   useEffect(() => {
@@ -49,13 +51,30 @@ export default function Game() {
           }),
         })
       })
-    // console.log(questionData)
   }, [])
+
+  useEffect(() => {
+    if (questionData) {
+      let selectedAnswers = questionData.answers.map((answerSet) => {
+        return answerSet.filter(function (e) {
+          return e.isSelected
+        })
+      })
+      let selectedAnswersArray = selectedAnswers[0].concat(
+        selectedAnswers[1],
+        selectedAnswers[2],
+        selectedAnswers[3],
+        selectedAnswers[4]
+      )
+      if (selectedAnswersArray.length === questionData.answers.length) {
+        setChosenAnswers(selectedAnswersArray)
+        setAllAnswered((prevState) => !prevState)
+      }
+    }
+  }, [questionData])
 
   // Question Element
   function Question(props) {
-    // const [options, setOptions] = useState(props.answers)
-
     function selectAnswer(e) {
       setQuestionData((prevData) => {
         const updatedOptions = prevData.answers[props.idx].map((option) => {
@@ -94,10 +113,21 @@ export default function Game() {
     )
   }
 
-  function Check() {
+  function checkAnswers() {
+    if (allAnswered) {
+      const correctAnswers = chosenAnswers.filter((e) => {
+        return e.isCorrect
+      })
+      console.log(`You scored ${correctAnswers.length}/${questionData.answers.length} correct answers.`)
+    } else{
+      console.log("finish the quiz plz")
+    }
+  }
+
+  function CheckButton() {
     return (
       <div className="check-answers">
-        <button onClick={() => console.log(questionData.answers)}>Check Answers</button>
+        <button onClick={() => checkAnswers()}>Check Answers</button>
       </div>
     )
   }
@@ -139,7 +169,8 @@ export default function Game() {
           answers={questionData.answers[4]}
         />
       )}
-      <Check />
+
+      <CheckButton />
     </div>
   )
 }
