@@ -3,13 +3,24 @@ import Answer from "./Answer"
 import { nanoid } from "nanoid"
 
 export default function Game() {
+  const [isStarted, setIsStarted] = useState(false)
   const [questionData, setQuestionData] = useState(null)
-  const [allAnswered, setAllAnswered] = useState(false)
   const [chosenAnswers, setChosenAnswers] = useState(null)
-  let resultText = ''
+  const [prompt, setPrompt] = useState(false)
+  const [allAnswered, setAllAnswered] = useState(false)
+  const [isCompleted, setIsCompleted] = useState(false)
 
-  // Fetch the Question Data
   useEffect(() => {
+    newGame()
+  }, [])
+
+  function newGame() {
+    setIsStarted(true)
+    setQuestionData(null)
+    setChosenAnswers(null)
+    setAllAnswered(false)
+    setIsCompleted(false)
+
     fetch(
       "https://opentdb.com/api.php?amount=5&category=21&difficulty=easy&type=multiple"
     )
@@ -24,24 +35,28 @@ export default function Game() {
                 isCorrect: false,
                 isSelected: false,
                 id: nanoid(),
+                hasBeenChecked: false,
               },
               {
                 answer: result.incorrect_answers[1],
                 isCorrect: false,
                 isSelected: false,
                 id: nanoid(),
+                hasBeenChecked: false,
               },
               {
                 answer: result.incorrect_answers[2],
                 isCorrect: false,
                 isSelected: false,
                 id: nanoid(),
+                hasBeenChecked: false,
               },
               {
                 answer: result.correct_answer,
                 isCorrect: true,
                 isSelected: false,
                 id: nanoid(),
+                hasBeenChecked: false,
               },
             ]
             let shuffledAnswersArray = answersArray.sort(() =>
@@ -51,8 +66,9 @@ export default function Game() {
           }),
         })
       })
-  }, [])
+  }
 
+  //collect user's answers
   useEffect(() => {
     if (questionData) {
       let selectedAnswers = questionData.answers.map((answerSet) => {
@@ -97,9 +113,9 @@ export default function Game() {
     }
 
     return (
-      <div className="question">
+      <div className="question--section">
         <h2>{props.question}</h2>
-        <ul className="answer-options">
+        <ul className="answers--set">
           {props.answers.map((option) => (
             <Answer
               key={option.id}
@@ -108,28 +124,52 @@ export default function Game() {
             />
           ))}
         </ul>
-        <hr />
       </div>
     )
-  }
-
-  function checkAnswers() {
-    if (allAnswered) {
-      const correctAnswers = chosenAnswers.filter((e) => {
-        return e.isCorrect
-      })
-      console.log(`You scored ${correctAnswers.length}/${questionData.answers.length} correct answers.`)
-    } else{
-      console.log("finish the quiz plz")
-    }
   }
 
   function CheckButton() {
-    return (
-      <div className="check-answers">
-        <button onClick={() => checkAnswers()}>Check Answers</button>
-      </div>
-    )
+    function checkIfCompleted() {
+      if (allAnswered) {
+        setIsCompleted(true)
+      } else {
+        setIsCompleted(false)
+        setPrompt(true)
+        setTimeout(() => {
+          setPrompt((prevState) => !prevState)
+        }, 1500)
+      }
+    }
+    return <button onClick={() => checkIfCompleted()}>Check Answers</button>
+  }
+
+  useEffect(() => {
+    if (isCompleted) {
+      setQuestionData((prevData) => {
+        const updatedAnswers = prevData.answers.map((options) => {
+          return options.map((option) => {
+            return { ...option, hasBeenChecked: true }
+          })
+        })
+        return {
+          questions: prevData.questions,
+          answers: updatedAnswers,
+        }
+      })
+    }
+  }, [isCompleted])
+
+  // Results Element
+  function Results() {
+    if (isCompleted) {
+      const correctAnswers = chosenAnswers.filter((e) => {
+        return e.isCorrect
+      })
+      return `You scored ${correctAnswers.length}/${questionData.answers.length} correct answers.`
+    }
+  }
+  function RestartButton() {
+    return <button onClick={newGame}>Play Again</button>
   }
 
   return (
@@ -169,8 +209,10 @@ export default function Game() {
           answers={questionData.answers[4]}
         />
       )}
-
-      <CheckButton />
+      {prompt && <span>Please complete the quiz.</span>}
+      {isCompleted && <Results />}
+      {!isCompleted && <CheckButton />}
+      {isCompleted && <RestartButton />}
     </div>
   )
 }

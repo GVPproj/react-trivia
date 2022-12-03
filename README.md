@@ -14,9 +14,6 @@
 
 Soon:
 
-- refactor React question elements
-- store chosen answers
-- store correct answers
 - Check button compares isSelected to isCorrect (indicate in the UI)
 
 Later:
