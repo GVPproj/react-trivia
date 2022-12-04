@@ -12,11 +12,5 @@
 
 ## Todos
 
-Soon:
-
-- Check button compares isSelected to isCorrect (indicate in the UI)
-
-Later:
-
-- styles
-- why are html codes rendering instead of corresponding symbols
+- flex utility class
+- add blobs

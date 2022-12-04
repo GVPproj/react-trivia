@@ -8,10 +8,18 @@ function App() {
   return (
     <>
       <nav>
-        <ul>
-          <Link to="/">Home</Link>
-          <Link to="/Game">Game</Link>
-          <Link to="/About">About</Link>
+        <ul className="nav--list">
+          <Link className="nav--link nav--title" to="/">
+            Quizzical
+          </Link>
+          <div>
+            <Link className="nav--link" to="/Game">
+              Game
+            </Link>
+            <Link className="nav--link" to="/About">
+              About
+            </Link>
+          </div>
         </ul>
       </nav>
       <main>

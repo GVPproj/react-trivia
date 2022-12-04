@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react"
+import { decode } from "html-entities"
 import Answer from "./Answer"
 import { nanoid } from "nanoid"
 
 export default function Game() {
-  const [isStarted, setIsStarted] = useState(false)
+  // const [isStarted, setIsStarted] = useState(false)
   const [questionData, setQuestionData] = useState(null)
   const [chosenAnswers, setChosenAnswers] = useState(null)
   const [prompt, setPrompt] = useState(false)
@@ -15,7 +16,7 @@ export default function Game() {
   }, [])
 
   function newGame() {
-    setIsStarted(true)
+    // setIsStarted(true)
     setQuestionData(null)
     setChosenAnswers(null)
     setAllAnswered(false)
@@ -27,32 +28,32 @@ export default function Game() {
       .then((results) => results.json())
       .then((data) => {
         setQuestionData({
-          questions: data.results.map((result) => result.question),
+          questions: data.results.map((result) => decode(result.question)),
           answers: data.results.map((result) => {
             let answersArray = [
               {
-                answer: result.incorrect_answers[0],
+                answer: decode(result.incorrect_answers[0]),
                 isCorrect: false,
                 isSelected: false,
                 id: nanoid(),
                 hasBeenChecked: false,
               },
               {
-                answer: result.incorrect_answers[1],
+                answer: decode(result.incorrect_answers[1]),
                 isCorrect: false,
                 isSelected: false,
                 id: nanoid(),
                 hasBeenChecked: false,
               },
               {
-                answer: result.incorrect_answers[2],
+                answer: decode(result.incorrect_answers[2]),
                 isCorrect: false,
                 isSelected: false,
                 id: nanoid(),
                 hasBeenChecked: false,
               },
               {
-                answer: result.correct_answer,
+                answer: decode(result.correct_answer),
                 isCorrect: true,
                 isSelected: false,
                 id: nanoid(),
@@ -140,7 +141,7 @@ export default function Game() {
         }, 1500)
       }
     }
-    return <button onClick={() => checkIfCompleted()}>Check Answers</button>
+    return <button className="btn--check" onClick={() => checkIfCompleted()}>Check Answers</button>
   }
 
   useEffect(() => {
@@ -173,7 +174,7 @@ export default function Game() {
   }
 
   return (
-    <div className="game-page">
+    <div className="quiz--page">
       {questionData && (
         <Question
           idx={0}
@@ -209,10 +210,12 @@ export default function Game() {
           answers={questionData.answers[4]}
         />
       )}
+      <div className="check--and--results">
       {prompt && <span>Please complete the quiz.</span>}
       {isCompleted && <Results />}
-      {!isCompleted && <CheckButton />}
+      {(questionData && !isCompleted) && <CheckButton />}
       {isCompleted && <RestartButton />}
+      </div>
     </div>
   )
 }
