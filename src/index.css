@@ -1,39 +1,59 @@
+/* CSS Settings and Variables */
+
+:root{
+  --clr-light: #f5f7fb;
+  --clr-med-light: #DBDEF0;
+  --clr-med: #4d5b9e;
+  --clr-dark: #293264;
+
+  --ff-titles: "Karla", sans-serif;
+  --ff-main: "Inter", sans-serif;
+}
+
 * {
-  /* box-sizing: border-box; */
+  box-sizing: border-box;
   margin: 0;
+  padding: 0;
 }
 
 html {
-  font-family: "Inter", sans-serif;
-  font-size: 16px;
+  font-family: var(--ff-main);
+  color: var(--clr-dark);
 }
 
-main {
-  margin: 0 auto;
+.flex{
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 2em;
-  width: 550px;
-  max-width: 60%;
+}
+
+main {
+  background-color: var(--clr-light);
+  color: var(--clr-dark);
+  width: 800px;
+  max-width: 95%;
   min-height: 550px;
-  background-color: #f5f7fb;
-  color: #293264;
-  padding: 40px 75px;
+  padding: 4rem 3rem;
+  margin: 0 auto 2rem;
 }
 
 button {
-  font-family: "Inter", sans-serif;
   cursor: pointer;
-  background-color: #4d5b9e;
-  color: #f5f7fb;
+  font-family: inherit;
   font-weight: 500;
   font-size: 1rem;
   letter-spacing: 1px;
-  padding: 20px 50px;
+  background-color: var(--clr-med);
+  color: var(--clr-light);
+  padding: 1rem 3rem;
   border: none;
-  border-radius: 24px;
+  border-radius: 1.5rem;
   align-self: center;
+  transition: 100ms ease;
+}
+
+button:hover, button:active{
+  background-color: var(--clr-dark);
 }
 
 
@@ -41,56 +61,36 @@ button {
 
 h1,
 h2 {
-  font-family: "Karla", sans-serif;
+  font-family: var(--ff-titles);
   font-weight: 700;
-  color: #293264;
 }
 
 h1 {
   text-align: center;
 }
 
-h3 {
-  font-weight: 400;
-  font-size: 16px;
-}
-
 /* Navigation */
 
 nav {
-  display: flex;
-  justify-content: center;
-  gap: 1em;
-  padding: 3em;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
+  gap: 1rem;
+  padding: 2rem;
 }
 
 .nav--list{
-  font-family: 'Karla', sans-serif;
+  font-family: var(--ff-titles);
   font-size: 1.5em;
-  display: flex;
-  gap: 4em;
-}
-
-.nav--list > div{
-
-  display: flex;
-  gap: 1em;
+  gap: 2em;
 }
 
 .nav--link{
-  color:#293264;
+  color:var(--clr-dark);
   text-decoration: none;
 }
 
 .nav--link:hover,
 .nav--link:active
 {
-  color: #4d5b9e;
+  color: var(--clr-med);
 }
 
 /* Splash Page */
@@ -108,35 +108,25 @@ ul {
 /* Quiz Page*/
 
 .quiz--page {
-  display: flex;
   flex-direction: column;
-  gap: 1em;
-}
-
-.btn--check {
-  align-self: center;
 }
 
 .question--section {
-  display: flex;
+ width: 100%;
   flex-direction: column;
-  gap: 1em;
-  padding-bottom: 1em;
-  /* margin-bottom: 0.75em; */
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1rem 0;
   border-bottom: 0.794239px solid #dbdef0;
 }
 
 .answers--set {
-  display: flex;
-  gap: 0.75em;
+  justify-content: flex-start;
+  gap: .75rem;
   flex-wrap: wrap;
 }
 
-.answers--set > li {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
+.answer {
   cursor: pointer;
   font-weight: 500;
   padding: 0.25em 0.75em;
@@ -145,9 +135,7 @@ ul {
 }
 
 .check--and--results{
-  display: flex;
+  margin-top: 2rem;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 1em;
+  gap: 1rem;
 }

@@ -114,9 +114,9 @@ export default function Game() {
     }
 
     return (
-      <div className="question--section">
+      <div className="flex question--section">
         <h2>{props.question}</h2>
-        <ul className="answers--set">
+        <ul className="flex answers--set">
           {props.answers.map((option) => (
             <Answer
               key={option.id}
@@ -141,7 +141,7 @@ export default function Game() {
         }, 1500)
       }
     }
-    return <button className="btn--check" onClick={() => checkIfCompleted()}>Check Answers</button>
+    return <button onClick={() => checkIfCompleted()}>Check Answers</button>
   }
 
   useEffect(() => {
@@ -174,7 +174,7 @@ export default function Game() {
   }
 
   return (
-    <div className="quiz--page">
+    <div className="flex quiz--page">
       {questionData && (
         <Question
           idx={0}
@@ -210,7 +210,7 @@ export default function Game() {
           answers={questionData.answers[4]}
         />
       )}
-      <div className="check--and--results">
+      <div className="flex check--and--results">
       {prompt && <span>Please complete the quiz.</span>}
       {isCompleted && <Results />}
       {(questionData && !isCompleted) && <CheckButton />}

@@ -4,7 +4,7 @@ export default function Splash(props) {
   return (
     <div className="info--page">
       <h1>Quizzical</h1>
-      <h3>A trivia game built with React and the Open Trivia API</h3>
+      <p>A trivia game built with React and the Open Trivia API</p>
       <Link to="/Game">
         <button className="btn--start">Start quiz</button>
       </Link>
