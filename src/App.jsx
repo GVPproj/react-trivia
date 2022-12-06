@@ -3,19 +3,42 @@ import Game from "./components/Game"
 import About from "./components/About"
 
 // our React Router elements
-import { Link, Route, Routes } from "react-router-dom"
+import { NavLink, Route, Routes } from "react-router-dom"
 
 function App() {
   return (
     <>
       <nav className="flex">
         <ul className="flex nav--list">
-          <Link className="nav--link" to="/">
+          <NavLink
+            className="nav--link"
+            to="/"
+            // style={({ isActive }) => ({
+            //   fontWeight: isActive ? "700" : "200",
+            // })}
+          >
             Quizzical
-          </Link>
-          <Link className="nav--link" to="/About">
-            About
-          </Link>
+          </NavLink>
+          <div className="flex nav--choices">
+            <NavLink
+              className="nav--link"
+              to="/Game"
+              style={({ isActive }) => ({
+                fontWeight: isActive ? "700" : "200",
+              })}
+            >
+              Game
+            </NavLink>
+            <NavLink
+              className="nav--link"
+              to="/About"
+              style={({ isActive }) => ({
+                fontWeight: isActive ? "700" : "200",
+              })}
+            >
+              About
+            </NavLink>
+          </div>
         </ul>
       </nav>
       <main className="flex">

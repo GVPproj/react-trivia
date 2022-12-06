@@ -1,6 +1,6 @@
 export default function About() {
   return (
-    <div className="info--page">
+    <div className="flex info--page">
       <h1>About</h1>
       <br />
       <div><p>
