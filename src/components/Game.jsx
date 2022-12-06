@@ -23,7 +23,7 @@ export default function Game() {
     setIsCompleted(false)
 
     fetch(
-      "https://opentdb.com/api.php?amount=5&category=21&difficulty=easy&type=multiple"
+      "https://opentdb.com/api.php?amount=5&difficulty=easy&type=multiple"
     )
       .then((results) => results.json())
       .then((data) => {
@@ -115,7 +115,7 @@ export default function Game() {
 
     return (
       <div className="flex question--section">
-        <h2>{props.question}</h2>
+        <h2 className="z-1">{props.question}</h2>
         <ul className="flex answers--set">
           {props.answers.map((option) => (
             <Answer
@@ -141,7 +141,7 @@ export default function Game() {
         }, 1500)
       }
     }
-    return <button onClick={() => checkIfCompleted()}>Check Answers</button>
+    return <button className="z-1" onClick={() => checkIfCompleted()}>Check Answers</button>
   }
 
   useEffect(() => {

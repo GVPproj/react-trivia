@@ -22,26 +22,6 @@ html {
   color: var(--clr-dark);
 }
 
-/* Utility */
-
-.flex {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Layout */
-
-main {
-  background-color: var(--clr-light);
-  color: var(--clr-dark);
-  width: 900px;
-  max-width: 100%;
-  min-height: 550px;
-  padding: 4rem 3rem;
-  margin: 0 auto;
-}
-
 /* Type and Buttons*/
 
 h1,
@@ -74,32 +54,82 @@ button {
 button:hover,
 button:active {
   background-color: var(--clr-med-light);
-  color: var(--clr-dark)
+  color: var(--clr-dark);
+}
+
+/* Utility */
+
+.flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.z-1 {
+  z-index: 1;
+}
+
+/* Layout */
+
+main::before {
+  content: "";
+  background-image: url("/blobTR.svg");
+  background-repeat: none;
+  position: fixed;
+  background-size: 18rem;
+  width: 18rem;
+  height: 18rem;
+  top: -7rem;
+  right: -5rem;
+  z-index: 0;
+}
+
+main::after {
+  content: "";
+  background-image: url("/blobBl.svg");
+  background-repeat: none;
+  position: fixed;
+  background-size: 18rem;
+  width: 18rem;
+  height: 18rem;
+  bottom: -7rem;
+  left: -5rem;
+  z-index: 0;
+}
+
+main {
+  background-color: var(--clr-light);
+  color: var(--clr-dark);
+  width: 900px;
+  max-width: 100%;
+  min-height: 550px;
+  padding: 1rem 3rem 4rem;
+  margin: 0 auto;
 }
 
 /* Navigation Section */
 
 nav {
-  padding: 2rem;
-  background-color: var(--clr-dark);
-  
+  color: var(--clr-dark);
+  z-index: 2;
 }
 
 .nav--list {
   font-family: var(--ff-titles);
-  font-size: 1.75rem;
-  width: 800px;
+  font-size: 2.25rem;
+  width: 900px;
+  padding: 2rem 3rem;
   max-width: 100%;
   justify-content: space-between;
 }
 
-.nav--choices{
+.nav--choices {
   gap: 2rem;
 }
 
 .nav--link {
   font-weight: 700;
-  color: var(--clr-light);
+  color: var(--clr-dark);
   text-decoration: none;
 }
 
@@ -111,11 +141,11 @@ nav {
 /* Splash Page */
 .info--page {
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 1rem;
 }
 
 .btn--start {
-  margin-top: .75rem;
+  margin-top: 1rem;
 }
 
 /* Quiz Page*/
@@ -151,4 +181,24 @@ nav {
   margin-top: 2rem;
   flex-direction: column;
   gap: 1rem;
+}
+
+@media (max-width: 600px) {
+  main::before {
+    background-size: 14rem;
+    width: 14rem;
+    height: 14rem;
+  }
+
+  main::after {
+    background-size: 15rem;
+    width: 15rem;
+    height: 15rem;
+  }
+  .nav--list {
+    font-size: 1.5rem;
+  }
+  .nav--choices {
+    gap: 1rem;
+  }
 }

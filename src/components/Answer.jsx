@@ -34,7 +34,7 @@ export default function Answer(props) {
   }
 
   return (
-    <li className="flex answer" style={styles} onClick={props.selectAnswer}>
+    <li className="flex z-1 answer" style={styles} onClick={props.selectAnswer}>
       {props.answer.answer}
     </li>
   )

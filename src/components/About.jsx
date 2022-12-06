@@ -3,16 +3,16 @@ export default function About() {
     <div className="flex info--page">
       <h1>About</h1>
       <br />
-      <div><p>
-        This page is rendered with React. Questions and answers, brought in from
-        the Open Trivia API, are managed with React's State functionality.
-      </p>
-      <br />
-      <p>
-        All functionality and code by myself, Graham Van Pelt, from Bob
-        Zirroll's Figma design files.
-      </p></div>
-      
+      <div>
+        <p>
+          This app is rendered with React. The questions are imported from the
+          Open Trivia API.
+        </p>
+        <br />
+        <p>App idea and initial design from Bob Ziroll's React course on Scrimba.</p>
+        <br />
+        <p>Coded and re-designed by Graham Van Pelt.</p>
+      </div>
     </div>
   )
 }

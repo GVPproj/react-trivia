@@ -9,13 +9,10 @@ function App() {
   return (
     <>
       <nav className="flex">
-        <ul className="flex nav--list">
+        <ul className="flex z-1 nav--list">
           <NavLink
             className="nav--link"
             to="/"
-            // style={({ isActive }) => ({
-            //   fontWeight: isActive ? "700" : "200",
-            // })}
           >
             Quizzical
           </NavLink>

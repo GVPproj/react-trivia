@@ -12,7 +12,6 @@
 
 ## Todos
 
-- finish css refactor
-- active navlink - https://stackoverflow.com/questions/41131450/active-link-with-react-router
-- deploy
-- add blobs
+- fix conditional answer BGs
+- add loader animation
+- refactor JSX
