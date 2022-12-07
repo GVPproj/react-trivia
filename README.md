@@ -13,5 +13,5 @@
 ## Todos
 
 - fix conditional answer BGs
-- add loader animation
 - refactor JSX
+- better about descriptions

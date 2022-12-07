@@ -1,40 +1,32 @@
 export default function Answer(props) {
+  const ans = props.answer
   let answerBG = ""
   let answerBorder = ""
 
-  if (props.answer.hasBeenChecked && props.answer.isSelected) {
-    answerBG = "#94D7A2"
-  } else if (
-    props.answer.hasBeenChecked &&
-    props.answer.isCorrect &&
-    !props.answer.isSelected
-  ) {
-    answerBG = "#F8BCBC"
-  } else if (props.answer.isSelected && !props.answer.hasBeenChecked) {
-    answerBG = "#D6DBF5"
+  if (ans.hasBeenChecked) {
+    if (ans.isSelected) {
+      ans.isCorrect ? (answerBG = "#94D7A2") : (answerBG = "#F8BCBC")
+    } else {
+      ans.isCorrect ? (answerBG = "#94D7A2") : (answerBG = "#fff")
+    }
   } else {
-    answerBG = "#ffffff"
+    ans.isSelected ? (answerBG = "#94D7A2") : (answerBG = "#fff")
   }
 
-  if (props.answer.isSelected) {
-    answerBorder = "#ffffff"
-  } else if (
-    props.answer.hasBeenChecked &&
-    props.answer.isCorrect &&
-    !props.answer.isSelected
-  ) {
-    answerBorder = "#ffffff"
-  } else {
-    answerBorder = "#4D5B9E"
-  }
+  ans.isSelected || (ans.isCorrect && ans.hasBeenChecked) ? answerBorder = '#fff' : answerBorder = "#4D5B9E"
+  
 
   const styles = {
     backgroundColor: answerBG,
-    border: `1px solid ${answerBorder}`
+    border: `1px solid ${answerBorder}`,
   }
 
   return (
-    <li className="flex z-1 answer" style={styles} onClick={props.selectAnswer}>
+    <li
+      className="flex z-1 answer"
+      style={styles}
+      onClick={!props.answer.hasBeenChecked ? props.selectAnswer : () => {}}
+    >
       {props.answer.answer}
     </li>
   )

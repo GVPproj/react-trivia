@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import { decode } from "html-entities"
 import Answer from "./Answer"
 import { nanoid } from "nanoid"
+import Loader from "./Loader"
 
 export default function Game() {
   // const [isStarted, setIsStarted] = useState(false)
@@ -170,11 +171,12 @@ export default function Game() {
     }
   }
   function RestartButton() {
-    return <button onClick={newGame}>Play Again</button>
+    return <button className="z-1" onClick={newGame}>Play Again</button>
   }
 
   return (
     <div className="flex quiz--page">
+      {!questionData && <Loader/>}
       {questionData && (
         <Question
           idx={0}
