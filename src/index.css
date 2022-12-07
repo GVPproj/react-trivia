@@ -34,6 +34,16 @@ h1 {
   text-align: center;
 }
 
+a {
+  color: var(--clr-dark);
+}
+a:visited,
+a:active {
+  color: var(--clr-dark);
+}
+a:hover {
+  color: var(--clr-med);
+}
 
 button {
   cursor: pointer;
@@ -134,7 +144,7 @@ nav {
   text-decoration: none;
 }
 
-.nav--link:hover{
+.nav--link:hover {
   color: var(--clr-med);
 }
 
@@ -184,14 +194,14 @@ nav {
 }
 
 @media (max-width: 600px) {
-  h1{
-    font-size:1.5rem;
+  h1 {
+    font-size: 1.5rem;
   }
-  h2{
+  h2 {
     font-size: 1.25rem;
   }
-  p{
-    font-size: .875rem;
+  p {
+    font-size: 0.875rem;
   }
 
   main::before {
