@@ -3,29 +3,28 @@ import { decode } from "html-entities"
 import Answer from "./Answer"
 import { nanoid } from "nanoid"
 import Loader from "./Loader"
+// import { newGame } from "./FetchQuizData"
 
 export default function Game() {
-  // const [isStarted, setIsStarted] = useState(false)
   const [questionData, setQuestionData] = useState(null)
   const [chosenAnswers, setChosenAnswers] = useState(null)
   const [prompt, setPrompt] = useState(false)
   const [allAnswered, setAllAnswered] = useState(false)
   const [isCompleted, setIsCompleted] = useState(false)
 
+  // run game on first load
   useEffect(() => {
     newGame()
   }, [])
 
+  // reset State variables and fetch new Questions
   function newGame() {
-    // setIsStarted(true)
     setQuestionData(null)
     setChosenAnswers(null)
     setAllAnswered(false)
     setIsCompleted(false)
 
-    fetch(
-      "https://opentdb.com/api.php?amount=5&difficulty=easy&type=multiple"
-    )
+    fetch("https://opentdb.com/api.php?amount=5&type=multiple")
       .then((results) => results.json())
       .then((data) => {
         setQuestionData({
@@ -70,7 +69,7 @@ export default function Game() {
       })
   }
 
-  //collect user's answers
+  //Collect user's answers
   useEffect(() => {
     if (questionData) {
       let selectedAnswers = questionData.answers.map((answerSet) => {
@@ -90,6 +89,23 @@ export default function Game() {
       }
     }
   }, [questionData])
+
+  // Check user's answers
+  useEffect(() => {
+    if (isCompleted) {
+      setQuestionData((prevData) => {
+        const updatedAnswers = prevData.answers.map((options) => {
+          return options.map((option) => {
+            return { ...option, hasBeenChecked: true }
+          })
+        })
+        return {
+          questions: prevData.questions,
+          answers: updatedAnswers,
+        }
+      })
+    }
+  }, [isCompleted])
 
   // Question Element
   function Question(props) {
@@ -130,6 +146,7 @@ export default function Game() {
     )
   }
 
+  // Either input completes quiz or prompt user to finish
   function CheckButton() {
     function checkIfCompleted() {
       if (allAnswered) {
@@ -142,24 +159,12 @@ export default function Game() {
         }, 1500)
       }
     }
-    return <button className="z-1" onClick={() => checkIfCompleted()}>Check Answers</button>
+    return (
+      <button className="z-1" onClick={() => checkIfCompleted()}>
+        Check Answers
+      </button>
+    )
   }
-
-  useEffect(() => {
-    if (isCompleted) {
-      setQuestionData((prevData) => {
-        const updatedAnswers = prevData.answers.map((options) => {
-          return options.map((option) => {
-            return { ...option, hasBeenChecked: true }
-          })
-        })
-        return {
-          questions: prevData.questions,
-          answers: updatedAnswers,
-        }
-      })
-    }
-  }, [isCompleted])
 
   // Results Element
   function Results() {
@@ -171,52 +176,56 @@ export default function Game() {
     }
   }
   function RestartButton() {
-    return <button className="z-1" onClick={newGame}>Play Again</button>
+    return (
+      <button className="z-1" onClick={newGame}>
+        Play Again
+      </button>
+    )
   }
+
 
   return (
     <div className="flex quiz--page">
-      {!questionData && <Loader/>}
+      {!questionData && <Loader />}
       {questionData && (
-        <Question
-          idx={0}
-          question={questionData.questions[0]}
-          answers={questionData.answers[0]}
-        />
-      )}
-      {questionData && (
-        <Question
-          idx={1}
-          question={questionData.questions[1]}
-          answers={questionData.answers[1]}
-        />
-      )}
-      {questionData && (
-        <Question
-          idx={2}
-          question={questionData.questions[2]}
-          answers={questionData.answers[2]}
-        />
-      )}
-      {questionData && (
-        <Question
-          idx={3}
-          question={questionData.questions[3]}
-          answers={questionData.answers[3]}
-        />
-      )}
-      {questionData && (
-        <Question
-          idx={4}
-          question={questionData.questions[4]}
-          answers={questionData.answers[4]}
-        />
+       
+        <>
+          <Question
+            idx={0}
+            question={questionData.questions[0]}
+            answers={questionData.answers[0]}
+          />
+
+          <Question
+            idx={1}
+            question={questionData.questions[1]}
+            answers={questionData.answers[1]}
+          />
+
+          <Question
+            idx={2}
+            question={questionData.questions[2]}
+            answers={questionData.answers[2]}
+          />
+
+          <Question
+            idx={3}
+            question={questionData.questions[3]}
+            answers={questionData.answers[3]}
+          />
+
+          <Question
+            idx={4}
+            question={questionData.questions[4]}
+            answers={questionData.answers[4]}
+          />
+        </>
       )}
       <div className="flex check--and--results">
-      {prompt && <span>Please complete the quiz.</span>}
-      {isCompleted && <Results />}
-      {(questionData && !isCompleted) && <CheckButton />}
-      {isCompleted && <RestartButton />}
+        {prompt && <span>Please complete the quiz.</span>}
+        {isCompleted && <Results />}
+        {questionData && !isCompleted && <CheckButton />}
+        {isCompleted && <RestartButton />}
       </div>
     </div>
   )

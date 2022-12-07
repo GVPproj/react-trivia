@@ -12,6 +12,5 @@
 
 ## Todos
 
-- fix conditional answer BGs
+- z-index text
 - refactor JSX
-- better about descriptions

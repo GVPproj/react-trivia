@@ -34,6 +34,7 @@ h1 {
   text-align: center;
 }
 
+
 button {
   cursor: pointer;
   font-family: inherit;
@@ -183,6 +184,16 @@ nav {
 }
 
 @media (max-width: 600px) {
+  h1{
+    font-size:1.5rem;
+  }
+  h2{
+    font-size: 1.25rem;
+  }
+  p{
+    font-size: .875rem;
+  }
+
   main::before {
     background-size: 14rem;
     width: 14rem;
