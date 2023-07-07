@@ -3,21 +3,21 @@ import { decode } from "html-entities"
 import Answer from "./Answer"
 import { nanoid } from "nanoid"
 import Loader from "./Loader"
-// import { newGame } from "./FetchQuizData"
 
 export default function Game() {
+  // state variables
   const [questionData, setQuestionData] = useState(null)
   const [chosenAnswers, setChosenAnswers] = useState(null)
-  const [prompt, setPrompt] = useState(false)
   const [allAnswered, setAllAnswered] = useState(false)
   const [isCompleted, setIsCompleted] = useState(false)
+  const [prompt, setPrompt] = useState(false)
 
   // run game on first load
   useEffect(() => {
     newGame()
   }, [])
 
-  // reset State variables and fetch new Questions
+  // initialize State variables and fetch new Questions
   function newGame() {
     setQuestionData(null)
     setChosenAnswers(null)
@@ -25,11 +25,12 @@ export default function Game() {
     setIsCompleted(false)
 
     fetch("https://opentdb.com/api.php?amount=5&type=multiple")
-      .then((results) => results.json())
-      .then((data) => {
+      .then((res) => res.json())
+      .then(({ results }) => {
+        
         setQuestionData({
-          questions: data.results.map((result) => decode(result.question)),
-          answers: data.results.map((result) => {
+          questions: results.map((result) => decode(result.question)),
+          answers: results.map((result) => {
             let answersArray = [
               {
                 answer: decode(result.incorrect_answers[0]),
@@ -73,16 +74,19 @@ export default function Game() {
   useEffect(() => {
     if (questionData) {
       let selectedAnswers = questionData.answers.map((answerSet) => {
-        return answerSet.filter(function (e) {
+       
+        return answerSet.filter( (e) => {
           return e.isSelected
+          
         })
-      })
+      })// filtering for the selected answer
+      
       let selectedAnswersArray = selectedAnswers[0].concat(
         selectedAnswers[1],
         selectedAnswers[2],
         selectedAnswers[3],
         selectedAnswers[4]
-      )
+      ) // merging selected answers into this new array
       if (selectedAnswersArray.length === questionData.answers.length) {
         setChosenAnswers(selectedAnswersArray)
         setAllAnswered((prevState) => !prevState)
@@ -107,7 +111,7 @@ export default function Game() {
     }
   }, [isCompleted])
 
-  // Question Element
+  // Question Component
   function Question(props) {
     function selectAnswer(e) {
       setQuestionData((prevData) => {
